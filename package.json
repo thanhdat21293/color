@@ -1,0 +1,13 @@
+{
+  "name": "color",
+  "version": "1.0.0",
+  "description": "Color",
+  "main": "index.js",
+  "repository": "https://github.com/thanhdat21293/color.git",
+  "author": "Thanh Dat",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "xml2js": "^0.4.17"
+  }
+}
