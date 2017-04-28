@@ -1,0 +1,36 @@
+.item {
+    background: #eee;
+    margin-bottom: 30px;
+}
+
+.item_inner {
+    padding: 20px;
+    overflow: hidden;
+}
+
+.box-colors span {
+    width: 20%;
+    height: 150px;
+    display: block;
+    float: left;
+}
+
+.box-colors {
+    display: inline-block;
+    width: 40%;
+    float: left;
+}
+
+.box-info {
+    width: 60%;
+    float: right;
+    padding-left: 30px;
+}
+.box-info > div{
+    margin-bottom: 10px;
+}
+.box-name {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+}
