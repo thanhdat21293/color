@@ -10,7 +10,7 @@ cd color/
 ## Chạy thử
 ```
 node index.js
-``` 
+```
 
 ## Thư viện CSS
 ```

@@ -1,10 +1,12 @@
-const elas = require("../elasticsearch/index");
+const { db, } = require('../pgp');
 
 class Color {
     constructor(){}
-
+    detail (id){
+        return db.oneOrNone('SELECT * FROM collection WHERE id = $1', id);
+    }
     all(){
-        return elas.searchAll('tbl_color', 'collection');
+        return db.any('SELECT * FROM collection');
     }
 }
 
