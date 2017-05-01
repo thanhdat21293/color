@@ -34,3 +34,70 @@
     font-size: 20px;
     line-height: 1;
 }
+
+
+.item-detail {
+    background: #eee;
+    margin-bottom: 30px;
+}
+
+.item_inner-detail {
+    padding: 20px;
+    overflow: hidden;
+}
+
+.box-colors-detail span {
+    width: 20%;
+    height: 150px;
+    display: block;
+    float: left;
+}
+
+.box-colors-detail {
+    display: inline-block;
+    width: 40%;
+    float: left;
+}
+
+.box-info-detail {
+    width: 60%;
+    float: right;
+    padding-left: 30px;
+}
+.box-info-detail > div{
+    margin-bottom: 10px;
+}
+.box-name-detail {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.related-inner {
+    width: 33.33%;
+    float: left;
+    padding: 5px;
+}
+
+.box-related {background: #e8e8e8;padding: 10px;display: inline-block;width: 100%;}
+
+.related-color span {
+    height: 100px;
+    width: 20%;
+    float: left;
+}
+
+.related-info h3 {
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.related-info {
+    float: left;
+    width: 100%;
+}
+
+.related-author {
+    margin-bottom: 10px;
+}

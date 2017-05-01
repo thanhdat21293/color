@@ -1,10 +1,13 @@
+const { db, } = require('../pgp');
 const color = require('../models/colors');
 const user = require('../models/users');
 const likedislike = require('../models/like_dislilke');
 
 const async = require("async");
 
-function merge (data, cb){
+let log = console.log;
+
+let merge = (data, cb) => {
     user.getNameEmail(data.id_user)
         .then((data1) => {
             data.author = data1.name;
@@ -23,19 +26,33 @@ function merge (data, cb){
 
 }
 
+let arrInArr = (arr1, arr2) => {
+    let arrCheck = [];
+    arr1.forEach((i) => {
+        let check = arr2.indexOf(i);
+        arrCheck.push(check)
+    })
+    let check = arrCheck.indexOf(-1);
+    if(check >= 0 ){
+        return '1'; //False
+    }else{
+        return '2'; //True
+    }
+}
+
 module.exports = (express) => {
 
     const router = express.Router();
-    let log = console.log;
+
     router.get('/', (req, res) => {
         color.all()
-            .then(data => {
+            .then(data1 => {
 
-                async.map(data, merge, (err, rs) => {
+                async.map(data1, merge, (err, rs) => {
                     //log(data);
                     res.render('index', {
                         data : {
-                            dt: data
+                            dt: data1
                         }
                     })
                 });
@@ -49,23 +66,68 @@ module.exports = (express) => {
 
     router.get('/:id', (req, res) => {
         let id = req.params.id;
-        
-        db.task(t => {
-            return t.batch([
-                color.detail(id)
-            ]);
-        })
-            .then(data => {
-                res.render('detail', {
+        color.detail(id)
+            .then(data1 => {
+                async.map(data1, merge, (err, rs) => {
+                    res.render('detail', {
                         data : {
-                            dt: data
+                            dt: data1
                         }
                     })
+                });
+
+
             })
             .catch(error => {
                 log(error);
             })
     });
+
+    router.post('/searchcolor', (req, res) => {
+        let arr = req.body['colorArr'];
+        log(req.body)
+        color.all()
+            .then(data1 => {
+
+                let data2 = [];
+                data1.forEach((i) => {
+                    let data3 = [];
+                    data3.push(i.color1);
+                    data3.push(i.color2);
+                    data3.push(i.color3);
+                    data3.push(i.color4);
+                    data3.push(i.color5);
+
+                    let check = arrInArr(arr, data3);
+                    if(check === '2'){
+                        data2.push(i);
+                    }
+
+                    if(i.color1 === '69D2E7'){
+//                        log(arr);
+//                        log(data3);
+//                        log(check);
+//                        log(data2);
+//                        log(i);
+                    }
+
+                })
+
+                //log(data2)
+
+
+                async.map(data2, merge, (err, rs) => {
+                    //log(data1);
+                    res.json({data: data2})
+                });
+
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    })
 
     return router;
 };

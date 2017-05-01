@@ -4,7 +4,7 @@ class Users {
     constructor(){}
 
     getNameEmail(id){
-        return db.oneOrNone('SELECT name, email FROM users WHERE id = $1', id);
+        return db.oneOrNone('SELECT name, email FROM users WHERE id = $1 LIMIT 1', id);
     }
 
     all(){

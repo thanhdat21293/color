@@ -2,7 +2,7 @@
 	<div>
 		<div id="container-color" v-if="dt" class="container">
 			<div class="item" v-for="i in dt">
-				<a href="/{{ i.id }}">
+				<a :href="i.id">
 					<div class="item_inner">
 						<div class="box-colors">
 							<span :style="{ 'backgroundColor': '#' + i.color1 }"></span>
@@ -26,7 +26,7 @@
 				</a>
 			</div>
 		</div>
-		<div v-else id="container-color">No colors.</div>
+		<div v-else id="container-color" class="container">No colors.</div>
 	</div>
 </template>
 <script>
@@ -34,7 +34,7 @@
     export default {
         data() {
             return {
-				dt : []
+
             }
         }
     }
