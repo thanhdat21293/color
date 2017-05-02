@@ -15,6 +15,7 @@ let merge = (data, cb) => {
         })
     likedislike.getCountLike(data.id)
         .then((data1) => {
+            log(data1);
             data.like = data1[0].like;
         })
 
@@ -85,30 +86,25 @@ module.exports = (express) => {
 
     router.post('/searchcolor', (req, res) => {
         let arr = req.body['colorArr'];
-        log(req.body)
+        let idColor = req.body['idColor'];
+        //log(req.body)
         color.all()
             .then(data1 => {
 
                 let data2 = [];
                 data1.forEach((i) => {
-                    let data3 = [];
-                    data3.push(i.color1);
-                    data3.push(i.color2);
-                    data3.push(i.color3);
-                    data3.push(i.color4);
-                    data3.push(i.color5);
+                    if(i.id != idColor){
+                        let data3 = [];
+                        data3.push(i.color1);
+                        data3.push(i.color2);
+                        data3.push(i.color3);
+                        data3.push(i.color4);
+                        data3.push(i.color5);
 
-                    let check = arrInArr(arr, data3);
-                    if(check === '2'){
-                        data2.push(i);
-                    }
-
-                    if(i.color1 === '69D2E7'){
-//                        log(arr);
-//                        log(data3);
-//                        log(check);
-//                        log(data2);
-//                        log(i);
+                        let check = arrInArr(arr, data3);
+                        if(check === '2'){
+                            data2.push(i);
+                        }
                     }
 
                 })
@@ -117,7 +113,7 @@ module.exports = (express) => {
 
 
                 async.map(data2, merge, (err, rs) => {
-                    //log(data1);
+                    //log(data2);
                     res.json({data: data2})
                 });
 

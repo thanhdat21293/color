@@ -4,11 +4,11 @@
 			<div class="item-detail" v-for="i in dt">
                 <div class="item_inner-detail">
                     <div class="box-colors-detail">
-                        <a :href="i.color1" @click.stop.prevent="searchcolor(i.color1)"><span :style="{ 'backgroundColor': '#' + i.color1 }"></span></a>
-                        <a :href="i.color2" @click.stop.prevent="searchcolor(i.color2)"><span :style="{ 'backgroundColor': '#' + i.color2 }"></span></a>
-                        <a :href="i.color3" @click.stop.prevent="searchcolor(i.color3)"><span :style="{ 'backgroundColor': '#' + i.color3 }"></span></a>
-                        <a :href="i.color4" @click.stop.prevent="searchcolor(i.color4)"><span :style="{ 'backgroundColor': '#' + i.color4 }"></span></a>
-                        <a :href="i.color5" @click.stop.prevent="searchcolor(i.color5)"><span :style="{ 'backgroundColor': '#' + i.color5 }"></span></a>
+                        <a :class="{active: isActive1}" :href="i.color1" @click.stop.prevent="searchcolor(i.color1, i.id, 1)"><span :style="{ 'backgroundColor': '#' + i.color1 }"></span></a>
+                        <a :class="{active: isActive2}" :href="i.color2" @click.stop.prevent="searchcolor(i.color2, i.id, 2)"><span :style="{ 'backgroundColor': '#' + i.color2 }"></span></a>
+                        <a :class="{active: isActive3}" :href="i.color3" @click.stop.prevent="searchcolor(i.color3, i.id, 3)"><span :style="{ 'backgroundColor': '#' + i.color3 }"></span></a>
+                        <a :class="{active: isActive4}" :href="i.color4" @click.stop.prevent="searchcolor(i.color4, i.id, 4)"><span :style="{ 'backgroundColor': '#' + i.color4 }"></span></a>
+                        <a :class="{active: isActive5}" :href="i.color5" @click.stop.prevent="searchcolor(i.color5, i.id, 5)"><span :style="{ 'backgroundColor': '#' + i.color5 }"></span></a>
                     </div>
                     <div class="box-info-detail">
                         <div class="box-name-detail">{{i.name}}</div>
@@ -65,12 +65,28 @@
             return {
 				arrSearch: [],
 				listColor: [],
-				errMsg: ''
+				errMsg: '',
+				isActive1: false,
+				isActive2: false,
+				isActive3: false,
+				isActive4: false,
+				isActive5: false
             }
         },
         methods: {
-            searchcolor(color){
-                console.log(this);
+            searchcolor(color, id, numberColor){
+                if(numberColor === 1){
+                    this.isActive1 = !this.isActive1;
+                }else if(numberColor === 2){
+                    this.isActive2 = !this.isActive2;
+                }else if(numberColor === 3){
+                    this.isActive3 = !this.isActive3;
+                }else if(numberColor === 4){
+                    this.isActive4 = !this.isActive4;
+                }else if(numberColor === 5){
+                    this.isActive5 = !this.isActive5;
+                }else{}
+
                 let inArr = this.arrSearch.indexOf(color);
                 if(inArr >= 0){
                     this.arrSearch.splice(inArr, 1);
@@ -80,10 +96,10 @@
 
                 if(this.arrSearch.length > 0){
                     axios.post('/searchcolor', {
-                            colorArr: this.arrSearch
+                            colorArr: this.arrSearch,
+                            idColor: id
                         })
                         .then(response => {
-                            console.log(response);
                             this.listColor = response.data.data;
                         })
                         .catch(error => {
