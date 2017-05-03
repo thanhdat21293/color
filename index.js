@@ -10,10 +10,9 @@ const bodyParser = require('body-parser');
 
 app.use ('/public', express.static ('public'));
 
-
 app.engine ('vue', expressVue);
 app.set ('view engine', 'vue');
-app.set ('views', path.join (__dirname, '/views'));
+app.set ('views', path.join(__dirname, '/views'));
 app.set ('vue', {
 	componentsDir: path.join (__dirname, 'views', 'components'),
 	defaultLayout : 'layout'
@@ -31,9 +30,6 @@ require('./routes/routes')(express);
 
 const routes = require('./routes/routes')(express)
 app.use('/', routes)
-
-
-
 
 const port = 3000;
 app.listen(port, () => {

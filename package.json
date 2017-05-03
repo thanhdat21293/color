@@ -10,6 +10,7 @@
     "async": "^2.3.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
+    "color-convert": "^1.9.0",
     "elasticsearch": "^13.0.0",
     "express": "^4.15.2",
     "express-vue": "^3.9.13",

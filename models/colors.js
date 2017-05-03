@@ -22,6 +22,11 @@ class Color {
         }
     }
 */
+    listById (arr){
+        console.log(arr);
+        return db.any("SELECT * FROM collection WHERE id IN ('" + arr.join("','") + "')");
+    }
+
     detail (id){
         return db.query('SELECT * FROM collection WHERE id = $1', id);
     }
