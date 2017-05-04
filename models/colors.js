@@ -2,31 +2,16 @@ const { db, } = require('../pgp');
 
 class Color {
     constructor(){}
-/*
-    findRelated (arr) {
-        let count = arr.length;
-        if(count === 1){
-            return db.query("SELECT * FROM collection WHERE color1 IN ('" + arr.join("','") + "') OR " +
-                                                            "color2 IN ('" + arr.join("','") + "') OR " +
-                                                            "color3 IN ('" + arr.join("','") + "') OR " +
-                                                            "color4 IN ('" + arr.join("','") + "') OR " +
-                                                            "color5 IN ('" + arr.join("','") + "') " +
-                                                            "");
-        }else if(count === 2){
-            return db.query("SELECT * FROM collection WHERE color1 IN ('" + arr.join("','") + "') OR " +
-                                                            "color2 IN ('" + arr.join("','") + "') OR " +
-                                                            "color3 IN ('" + arr.join("','") + "') OR " +
-                                                            "color4 IN ('" + arr.join("','") + "') OR " +
-                                                            "color5 IN ('" + arr.join("','") + "') " +
-                                                            "");
-        }
+
+    listColorLimit(number){
+        return db.many("SELECT * FROM collection LIMIT $1", number);
     }
-*/
     listById (arr){
-        console.log(arr);
         return db.any("SELECT * FROM collection WHERE id IN ('" + arr.join("','") + "')");
     }
-
+    getPalletByColor (id){
+        return db.any("SELECT * FROM collection WHERE color1 = $1 OR color2 = $1 OR color3 = $1 OR color4 = $1 OR color5 = $1", id);
+    }
     detail (id){
         return db.query('SELECT * FROM collection WHERE id = $1', id);
     }

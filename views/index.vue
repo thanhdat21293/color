@@ -1,5 +1,20 @@
 <template>
 	<div>
+		<div id="box-search" class="container">
+			<form name="form-search" method="post" action="" v-on="submit: search">
+				<div class="div-search">
+					<input type="text" name="search" placeholder="Color">
+				</div>
+				<div class="div-select">
+					<select name="sort">
+						<option value="all">--</option>
+						<option value="like">Like</option>
+						<option value="random">Ramdom</option>
+						<option value="latest">Lastest</option>
+					</select>
+				</div>
+			</form>
+		</div>
 		<div id="container-color" v-if="dt" class="container">
 			<div class="item" v-for="i in dt">
 				<a :href="i.id">
@@ -36,6 +51,11 @@
             return {
 
             }
-        }
+        },
+		methods: {
+            search(){
+                console.log(1)
+			}
+		}
     }
 </script>

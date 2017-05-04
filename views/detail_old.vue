@@ -69,52 +69,30 @@
 				isActive2: false,
 				isActive3: false,
 				isActive4: false,
-				isActive5: false,
+				isActive5: false
             }
         },
         methods: {
             searchcolor(color, id, numberColor){
                 if(numberColor === 1){
                     this.isActive1 = !this.isActive1;
-                    this.isActive2 = false;
-                    this.isActive3 = false;
-                    this.isActive4 = false;
-                    this.isActive5 = false;
                 }else if(numberColor === 2){
                     this.isActive2 = !this.isActive2;
-                    this.isActive1 = false;
-                    this.isActive3 = false;
-                    this.isActive4 = false;
-                    this.isActive5 = false;
                 }else if(numberColor === 3){
                     this.isActive3 = !this.isActive3;
-                    this.isActive2 = false;
-                    this.isActive1 = false;
-                    this.isActive4 = false;
-                    this.isActive5 = false;
                 }else if(numberColor === 4){
                     this.isActive4 = !this.isActive4;
-                    this.isActive2 = false;
-                    this.isActive3 = false;
-                    this.isActive1 = false;
-                    this.isActive5 = false;
                 }else if(numberColor === 5){
                     this.isActive5 = !this.isActive5;
-                    this.isActive2 = false;
-                    this.isActive3 = false;
-                    this.isActive4 = false;
-                    this.isActive1 = false;
                 }else{}
 
                 let inArr = this.arrSearch.indexOf(color);
                 if(inArr >= 0){
                     this.arrSearch.splice(inArr, 1);
                 }else{
-                    this.arrSearch = [color];
+                    this.arrSearch.push(color);
                 }
 
-                //this.arrSearch = [color];
-                console.log(this.arrSearch);
                 if(this.arrSearch.length > 0){
                     axios.post('/searchcolor', {
                             colorArr: this.arrSearch,
