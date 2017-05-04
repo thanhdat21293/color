@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<div id="box-search" class="container">
-			<form name="form-search" method="post" action="" v-on="submit: search">
+			<form name="form-search" method="post" v-on:submit.prevent="">
 				<div class="div-search">
-					<input type="text" name="search" placeholder="Color">
+					<input type="text" name="search" placeholder="Color" v-model="search">
 				</div>
 				<div class="div-select">
-					<select name="sort">
+					<select v-model="selected" name="sort" v-on:change="search1()">
 						<option value="all">--</option>
 						<option value="like">Like</option>
 						<option value="random">Ramdom</option>
@@ -49,12 +49,18 @@
     export default {
         data() {
             return {
-
+                search: '',
+                selected: 'all'
             }
         },
-		methods: {
-            search(){
-                console.log(1)
+        methods: {
+            search1() {
+                console.log(this.selected)
+			}
+        },
+		watch: {
+		    search: (val) => {
+                console.log(val)
 			}
 		}
     }

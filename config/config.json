@@ -4,7 +4,7 @@
     "password": "abc",
     "database": "color",
     "host"    : "localhost",
-    "port"    : 5433,
+    "port"    : 5432,
     "dialect" : "postgres",
     "schema"  : "public",
     "logging" : false

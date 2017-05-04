@@ -20,7 +20,6 @@ module.exports = {
                 data.dislike = data1[0].dislike;
                 cb(null, data);
             })
-
     },
 
     arrInArr: (arr1, arr2) => {

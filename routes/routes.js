@@ -15,7 +15,6 @@ module.exports = (express) => {
     router.get('/', (req, res) => {
         color.all()
             .then(data1 => {
-
                 async.map(data1, functions.merge, (err, rs) => {
                     //log(data);
                     res.render('index', {
@@ -64,7 +63,7 @@ module.exports = (express) => {
                 let count = 0;
                 data.forEach((i) => {
                     count++;
-                    if(count < 11) {
+                    if(count < 13) {
                         if (i.id === arr[0]) {
                             arrNew.push(i.id_related)
                         } else {
@@ -74,13 +73,16 @@ module.exports = (express) => {
                 });
                 //log(arrNew)
                 db.task(t => {
-
                     return t.batch([
-
+                        color.getPalletByMultiColor(arrNew)
                     ]);
                 })
                     .then(data1 => {
-                        log(data1)
+                        async.map(data1[0], functions.merge, (err, rs) => {
+                            res.json({data: data1[0]})
+
+                        });
+
                     })
             })
             .catch(error => {
