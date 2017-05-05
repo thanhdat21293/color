@@ -22,14 +22,14 @@ app.use (bodyParser.urlencoded ({
 	extended: true
 }));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 let log = console.log;
 
 require('./routes/routes')(express);
 
-const routes = require('./routes/routes')(express)
-app.use('/', routes)
+const routes = require('./routes/routes')(express);
+app.use('/', routes);
 
 const port = 3000;
 app.listen(port, () => {

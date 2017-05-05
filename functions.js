@@ -9,17 +9,21 @@ module.exports = {
             .then((data1) => {
                 data.author = data1.name;
                 data.author_email = data1.email;
-            })
-        likedislike.getCountLike(data.id)
-            .then((data1) => {
-                data.like = data1[0].like;
+
+                likedislike.getCountLike(data.id)
+                    .then((data1) => {
+                        data.like = data1[0].like;
+
+                        likedislike.getCountDislike(data.id)
+                            .then((data1) => {
+                                data.dislike = data1[0].dislike;
+                                cb(null, data);
+                            })
+                    })
             })
 
-        likedislike.getCountDislike(data.id)
-            .then((data1) => {
-                data.dislike = data1[0].dislike;
-                cb(null, data);
-            })
+
+
     },
 
     arrInArr: (arr1, arr2) => {

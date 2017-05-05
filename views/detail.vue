@@ -114,9 +114,8 @@
                 }
 
                 //this.arrSearch = [color];
-                console.log(this.arrSearch);
                 if(this.arrSearch.length > 0){
-                    axios.post('/searchcolor', {
+                    axios.post('/colorrelated', {
                             colorArr: this.arrSearch,
                             idColor: id
                         })

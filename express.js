@@ -32,7 +32,7 @@ let log = console.log;
 //require('./routes/routes')(express);
 
 app.get('/listcolor', (req, res) => {
-	color.listColorLimit(50)
+	color.listColorLimit(20)
 		.then(data => {
 			res.json({data: data})
 		})
