@@ -8,65 +8,18 @@ const functions = require('../functions');
 
 let log = console.log;
 
-module.exports = (express) => {
+module.exports = (app, express) => {
 
     const router = express.Router();
 
-    router.get('/', (req, res) => {
+    const home = require('./home')(express);
+    app.use('/', home);
 
-        let q = req.body['page'];
-        let n = 19;
-        let pgfrom = 0;
-        if (q != undefined && q > 0) {
-            pgfrom = (pgfrom + q - 1) * n;
-        } else {
-            q = 1;
-        }
-        db.task(t => {
-            return t.batch([
-                color.getColorPage(pgfrom, n),
-                color.count('')
-            ]);
-        })
-            .then(data => {
-                let allcolor = data[1][0].count;
-                p = Math.ceil(allcolor / n, 0);
-                async.map(data[0], functions.merge, (err, rs) => {
-                    //log(data);
-                    res.render('index', {
-                        data : {
-                            dt: data[0],
-                            allpage: p,
-                            page: q
-                        }
-                    })
-                });
+    const r_color = require('./r_colors')(express);
+    app.use('/color/', r_color);
 
-
-            })
-            .catch(error => {
-                log(error);
-            })
-    });
-
-    router.get('/color/:id', (req, res) => {
-        let id = req.params.id;
-        color.detail(id)
-            .then(data1 => {
-                async.map(data1, functions.merge, (err, rs) => {
-                    res.render('detail', {
-                        data : {
-                            dt: data1
-                        }
-                    })
-                });
-
-
-            })
-            .catch(error => {
-                log(error);
-            })
-    });
+    const r_user = require('./r_users')(express);
+    app.use('/user/', r_user);
 
     router.post('/colorrelated', (req, res) => {
         let arr = req.body['colorArr'];

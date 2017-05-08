@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<headers></headers>
 		<div id="box-search" class="container">
 			<form name="form-search" method="post" v-on:submit.prevent="findcolor()">
 				<div class="div-search">
@@ -18,14 +19,13 @@
 		</div>
 		<div id="container-color" v-if="dt" class="container">
 			<div class="item" v-for="i in dt">
-				<a :href="'/color/' + i.id">
 					<div class="item_inner">
 						<div class="box-colors">
-							<span :style="{ 'backgroundColor': '#' + i.color1 }"></span>
-							<span :style="{ 'backgroundColor': '#' + i.color2 }"></span>
-							<span :style="{ 'backgroundColor': '#' + i.color3 }"></span>
-							<span :style="{ 'backgroundColor': '#' + i.color4 }"></span>
-							<span :style="{ 'backgroundColor': '#' + i.color5 }"></span>
+							<span :style="{ 'backgroundColor': '#' + i.color1 }" :color="i.color1" @click.stop.prevent="getColor(i.color1)"><abbr>Copy</abbr></span>
+							<span :style="{ 'backgroundColor': '#' + i.color2 }" :color="i.color2" @click.stop.prevent="getColor(i.color2)"><abbr>Copy</abbr></span>
+							<span :style="{ 'backgroundColor': '#' + i.color3 }" :color="i.color3" @click.stop.prevent="getColor(i.color3)"><abbr>Copy</abbr></span>
+							<span :style="{ 'backgroundColor': '#' + i.color4 }" :color="i.color4" @click.stop.prevent="getColor(i.color4)"><abbr>Copy</abbr></span>
+							<span :style="{ 'backgroundColor': '#' + i.color5 }" :color="i.color5" @click.stop.prevent="getColor(i.color5)"><abbr>Copy</abbr></span>
 						</div>
 						<div class="box-info">
 							<div class="box-name">{{i.name}}</div>
@@ -37,16 +37,19 @@
 								<span class="share"> <i class="fa fa-share-alt" aria-hidden="true"></i>{{ i.share }}</span>
 							</div>
 							<div class="box-des">{{ i.description }}</div>
+							<a :href="'/color/' + i.id">View Detail</a>
 						</div>
 					</div>
-				</a>
 			</div>
 			<div id="pagination" v-if="allpage > 1">
-				<ul>
-					<li v-for="i in allpage">
-						<a :href="i + 1" v-on:click.stop.prevent="search2(i + 1)" v-model="page">{{i + 1}}</a>
-					</li>
-				</ul>
+				<nav aria-label="...">
+					<ul class="pagination">
+						<li v-for="i in allpage">
+							<a :href="i + 1" v-if="page === i + 1" class="active" v-on:click.stop.prevent="" v-model="page">{{i + 1}}</a>
+							<a :href="i + 1" v-else v-on:click.stop.prevent="search2(i + 1)" v-model="page">{{i + 1}}</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 		<div v-else id="container-color" class="container">No colors.</div>
@@ -81,7 +84,6 @@
 						page: this.page
 					})
 					.then(response => {
-					    console.log(response.data.allpage);
 						this.dt = response.data.data;
 						this.allpage = parseInt(response.data.allpage);
 						this.page = response.data.page;
@@ -91,6 +93,9 @@
 						this.dt = [];
 						this.errMsg = 'Error';
 					});;
+			},
+			getColor(color){
+			    copyTextToClipboard(color)
 			}
         },
 		watch: {

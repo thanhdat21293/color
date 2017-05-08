@@ -26,9 +26,9 @@ app.use(bodyParser.json());
 
 let log = console.log;
 
-require('./routes/routes')(express);
+//require('./routes/routes')(app, express);
 
-const routes = require('./routes/routes')(express);
+const routes = require('./routes/routes')(app, express);
 app.use('/', routes);
 
 const port = 3000;

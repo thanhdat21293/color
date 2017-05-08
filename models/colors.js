@@ -4,7 +4,7 @@ class Color {
     constructor(){}
 
     listColorLimit(number){
-        return db.many("SELECT * FROM collection LIMIT $1", number);
+        return db.many("SELECT * FROM collection ORDER BY date DESC LIMIT $1", number);
     }
 
     listById (arr){
@@ -32,11 +32,11 @@ class Color {
     }
 
     detail (id){
-        return db.query('SELECT * FROM collection WHERE id = $1', id);
+        return db.oneOrNone("SELECT * FROM collection WHERE id = $1", id);
     }
 
     getColorPage(pgfrom, n){
-        return db.any('SELECT * FROM collection ORDER BY date DESC LIMIT $2 OFFSET $1', [pgfrom, n]);
+        return db.any("SELECT * FROM collection ORDER BY date DESC LIMIT $2 OFFSET $1", [pgfrom, n]);
     }
 
     count(search){

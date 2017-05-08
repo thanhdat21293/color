@@ -5,9 +5,10 @@ const convert = require('color-convert');
 
 module.exports = {
     merge: (data, cb) => {
+        //console.log(data);
         user.getNameEmail(data.id_user)
             .then((data1) => {
-                data.author = data1.name;
+                data.author = data1.username;
                 data.author_email = data1.email;
 
                 likedislike.getCountLike(data.id)
@@ -25,6 +26,8 @@ module.exports = {
 
 
     },
+
+
 
     arrInArr: (arr1, arr2) => {
         let arrCheck = [];

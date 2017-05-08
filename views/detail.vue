@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<headers></headers>
         <div id="container-color-detail" v-if="dt" class="container">
 			<div class="item-detail" v-for="i in dt">
                 <div class="item_inner-detail">
@@ -37,11 +38,11 @@
             <div class="related-inner" v-for="i in listColor">
                 <div class="box-related">
                     <div class="related-color">
-                        <span :style="{ 'backgroundColor': '#' + i.color1 }"></span>
-                        <span :style="{ 'backgroundColor': '#' + i.color2 }"></span>
-                        <span :style="{ 'backgroundColor': '#' + i.color3 }"></span>
-                        <span :style="{ 'backgroundColor': '#' + i.color4 }"></span>
-                        <span :style="{ 'backgroundColor': '#' + i.color5 }"></span>
+                        <span :style="{ 'backgroundColor': '#' + i.color1 }" @click.stop.prevent="getColor(i.color1)"><abbr>Copy</abbr></span>
+                        <span :style="{ 'backgroundColor': '#' + i.color2 }" @click.stop.prevent="getColor(i.color2)"><abbr>Copy</abbr></span>
+                        <span :style="{ 'backgroundColor': '#' + i.color3 }" @click.stop.prevent="getColor(i.color3)"><abbr>Copy</abbr></span>
+                        <span :style="{ 'backgroundColor': '#' + i.color4 }" @click.stop.prevent="getColor(i.color4)"><abbr>Copy</abbr></span>
+                        <span :style="{ 'backgroundColor': '#' + i.color5 }" @click.stop.prevent="getColor(i.color5)"><abbr>Copy</abbr></span>
                     </div>
                     <div class="related-info">
                         <h3>{{ i.name }}</h3>
@@ -51,6 +52,7 @@
                             <span class="related-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{ i.dislike }}</span>
                             <span class="related-share"> <i class="fa fa-share-alt" aria-hidden="true"></i>{{ i.share }}</span>
                         </div>
+                        <a :href="'/color/' + i.id">View Detail</a>
                     </div>
                 </div>
             </div>
@@ -73,6 +75,9 @@
             }
         },
         methods: {
+			getColor(color){
+			    copyTextToClipboard(color)
+			},
             searchcolor(color, id, numberColor){
                 if(numberColor === 1){
                     this.isActive1 = !this.isActive1;

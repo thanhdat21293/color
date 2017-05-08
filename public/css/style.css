@@ -13,8 +13,23 @@
     height: 150px;
     display: block;
     float: left;
+    line-height: 150px;
+    text-align: center;
+    cursor: pointer;
+}
+.box-colors span abbr {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.13);
+    line-height: normal;
+    padding: 2px 5px;
+    font-size: 18px;
+    color: #000;
+    opacity: 0;
 }
 
+.box-colors span:hover abbr {
+    opacity: 1;
+}
 .box-colors {
     display: inline-block;
     width: 40%;
@@ -82,9 +97,26 @@
 .box-related {background: #e8e8e8;padding: 10px;display: inline-block;width: 100%;}
 
 .related-color span {
-    height: 100px;
     width: 20%;
+    height: 100px;
+    display: block;
     float: left;
+    line-height: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+.related-color span abbr {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.13);
+    line-height: normal;
+    padding: 2px 5px;
+    font-size: 16px;
+    color: #000;
+    opacity: 0;
+}
+
+.related-color span:hover abbr {
+    opacity: 1;
 }
 
 .related-info h3 {
@@ -105,3 +137,4 @@
     box-shadow: 0px 0px 10px #848484;
     position: relative;
 }
+
