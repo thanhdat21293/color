@@ -37,3 +37,11 @@ insert_data.js
 ```
 data/related.js
 ```
+
+## Anh website
+- Trang chủ
+![Trang chu](public/images/index.png)
+
+- Trang chi tiết
+
+![Chi tiet](public/images/detail.png)
