@@ -82,10 +82,8 @@ module.exports = (app, express) => {
         })
 
             .then(data => {
-
                 let allcolor = data[1][0].count;
                 let p = Math.ceil(allcolor / n, 0);
-
                 async.map(data[0], functions.merge, (err, rs) => {
                     if(selected !== 'like') {
                         res.json({
@@ -94,9 +92,15 @@ module.exports = (app, express) => {
                             page: q
                         })
                     }else{
-                        data[0].sort(function(a,b) {
-                            return b.like - a.like;
-                        });
+                        //log(data[0])
+                        // data[0].forEach(item => {
+                        //     if(item.id === 'Byy9h_lk-'){
+                        //         log(item);
+                        //     }
+                        // })
+                        // data[0].sort(function(a,b) {
+                        //     return b.like - a.like;
+                        // });
                         res.json({
                             data: data[0],
                             allpage: p,

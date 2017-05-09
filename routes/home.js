@@ -41,7 +41,7 @@ module.exports = function (express) {
                             page: q
                         },
                         vue: {
-                            components: ['headers']
+                            components: ['headers', 'boxcolor']
                         }
                     })
                 });
