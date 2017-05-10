@@ -6,7 +6,9 @@ const related = require('../models/related');
 const async = require("async");
 const functions = require('../functions');
 const shortid = require('shortid');
-
+const md5 = require('md5');
+const dateFormat = require('dateformat');
+const now = new Date();
 
 let log = console.log;
 
@@ -29,18 +31,28 @@ module.exports = function (express) {
             user.CheckNameEmail(userEmail)
                 .then(data => {
                     if(!data){
+
+                        let wsdate = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
                         let data1 = [
                             shortid.generate(),
                             username,
-                            password,
-                            confirmpassword
+                            email,
+                            md5(password),
+                            wsdate
                         ];
 
-                        res.json({
-                            registerSuccess: 'You have successfully registered and',
-                            textLink: 'logged in',
-                            href: '/user/login'
-                        })
+                        user.insert(data1)
+                            .then(data => {
+                                res.json({
+                                    registerSuccess: 'You have successfully registered and',
+                                    textLink: 'logged in',
+                                    href: '/user/login'
+                                })
+                            })
+                            .catch(error => {
+                                res.json({errUserRegister: 'Registration failed.'})
+                            });
+
                     }else{
                         res.json({errUserRegister: 'Username or Email exists'})
                     }
@@ -51,6 +63,19 @@ module.exports = function (express) {
         }else{
             res.json({errUserRegister: 'Password do not match'})
         }
+    });
+
+    router.post('/login', (req, res) => {
+        let username = req.body['username'];
+        let password = req.body['password'];
+        log(username)
+        user.checkNameEmailLogin(username)
+            .then(data => {
+                log(data);
+            })
+            .catch(error => {
+                log(error);
+            })
     });
 
     return router

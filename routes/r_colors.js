@@ -6,7 +6,6 @@ const related = require('../models/related');
 const async = require("async");
 const functions = require('../functions');
 
-
 let log = console.log;
 
 module.exports = function (express) {

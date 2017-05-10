@@ -7,14 +7,17 @@
                         <li class="active">
                             <a href="/">Home</a>
                         </li>
-                        <li><a href="#" data-toggle="modal" data-target="#login">Login</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#register">Register</a></li>
+                        <li v-if="!user"><a href="#" data-toggle="modal" data-target="#login">Login</a></li>
+                        <li v-if="!user"><a href="#" data-toggle="modal" data-target="#register">Register</a></li>
+
+                        <li v-if="user"><a href="#" data-toggle="modal" data-target="#login">Account</a></li>
+                        <li v-if="user"><a href="#" data-toggle="modal" data-target="#register">Logout</a></li>
 
                         <div class="modal fade" id="login" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form method="post" action="/user/login">
+                                    <form method="post" action="/user/login" v-on:submit.prevent="login()" id="form-login">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span></button>
@@ -27,10 +30,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="message-text" class="control-label">Password</label>
-                                                    <input type="password" class="form-control" name="passwors">
+                                                    <input type="password" class="form-control" name="password">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
+                                            <p style="float:left;">Don't have an account? <a href="#"  v-on:click.stop.prevent="clickRegister">Sign up</a></p>
                                             <button type="submit" class="btn btn-primary">Login</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                         </div>
@@ -57,7 +61,7 @@
                                                     <p class="text-success">
                                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                         {{ registerSuccess }}
-                                                        <a :href="href">{{ textLink }}</a>
+                                                        <a :href="href" v-on:click.stop.prevent="clickLogin">{{ textLink }}</a>
                                                     </p>
                                                 </div>
                                                 <div class="form-group">
@@ -70,7 +74,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="message-text" class="control-label">Password</label>
-                                                    <input type="password" class="form-control" name="password" required>
+                                                    <input type="password" minlength="6" class="form-control" name="password" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="message-text" class="control-label">Confirm Password</label>
@@ -100,7 +104,8 @@
                 errUserRegister: '',
                 registerSuccess: '',
                 text: '',
-                href: ''
+                href: '',
+                user: ''
             }
         },
         props: ['things'],
@@ -126,7 +131,36 @@
 					})
 					.catch(error => {
 						this.errUserRegister = 'Error';
-					});;
+					});
+            },
+            login(){
+                axios.post('/user/login', {
+						email: $("#form-login input[name=email]").val(),
+						password: $("#form-login input[name=password]").val()
+					})
+					.then(response => {
+					    if(response.data.errUserRegister) {
+					        this.registerSuccess = '';
+                            this.errUserRegister = response.data.errUserRegister;
+                        }
+                        if(response.data.registerSuccess) {
+                            this.errUserRegister = '';
+                            this.registerSuccess = response.data.registerSuccess;
+                            this.textLink = response.data.textLink;
+                            this.href = response.data.href;
+                        }
+					})
+					.catch(error => {
+						this.errUserRegister = 'Error';
+					});
+            },
+            clickLogin() {
+                $('.modal').trigger('click');
+                $('a[data-target="#login"]').trigger('click')
+            },
+            clickRegister() {
+                $('.modal').trigger('click');
+                $('a[data-target="#register"]').trigger('click')
             }
         }
     }

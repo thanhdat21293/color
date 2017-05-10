@@ -38,7 +38,8 @@ module.exports = function (express) {
                         data : {
                             dt: data[0],
                             allpage: p,
-                            page: q
+                            page: q,
+                            user: ''
                         },
                         vue: {
                             components: ['headers', 'boxcolor']
